@@ -419,7 +419,6 @@ void Game::computerSelect() {
 	}
 	int bestCard = 0;
 	if (!temp.size()) {
-		userGo = 0;
 		int count = 0;
 		for (int i = 0; i < user.getHand().size(); i++) {
 			if (field + user.getHand()[i].getValue() <= 31) {
@@ -428,6 +427,7 @@ void Game::computerSelect() {
 			}
 		}
 		if (count) {
+			userGo = 0;
 			std::cout << "Go." << "\n";
 			return;
 		}
@@ -452,6 +452,13 @@ void Game::computerSelect() {
 				printScores();
 			}
 			std::cout << "Count: " << field << "\n";
+			if (userGo) {
+				userGo = 0;
+				return;
+			}
+			else {
+				userGo = 0;
+			}
 		}
 	}
 	if (field == 0) {
