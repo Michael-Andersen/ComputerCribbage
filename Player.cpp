@@ -38,7 +38,7 @@ std::vector<Card> Player::getHand()
 std::string Player::printHand()
 {
 	std::stringstream result;
-	for (int i = 0; i < hand.size(); i++)
+	for (size_t i = 0; i < hand.size(); i++)
 	{
 		result << i << ": " << hand[i].print() << "\n";
 	}

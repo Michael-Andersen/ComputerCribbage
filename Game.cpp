@@ -31,7 +31,7 @@ void Game::dealAHand()
 	Deck deck;
 	stream = deck.dealStream(13);
 	if (round % 2 == 0) {
-		for (int i = 0; i < 12; i++){
+		for (size_t i = 0; i < 12; i++){
 		 	if (i % 2 == 0) {
 				user.addCard(stream.at(i));
 			}
@@ -41,7 +41,7 @@ void Game::dealAHand()
 		}
 	}
 	else {
-		for (int i = 0; i < 12; i++) {
+		for (size_t i = 0; i < 12; i++) {
 			if (i % 2 == 0) {
 				computer.addCard(stream.at(i));
 
@@ -85,15 +85,15 @@ int Game::calculateFifteens(std::vector<Card> n) {
 		value += 2;
 	}
 	else {
-		for (int i = 0; i < n.size(); i++) {
+		for (size_t i = 0; i < n.size(); i++) {
 			if (allCards - n[i].getValue() == 15) {
 				value += 2;
 			}
 		}
 
-		for (int i = 0; i < n.size() - 2; i++) {
-			for (int j = i + 1; j < n.size() - 1; j++) {
-				for (int k = j + 1; k < n.size(); k++) {
+		for (size_t i = 0; i < n.size() - 2; i++) {
+			for (size_t j = i + 1; j < n.size() - 1; j++) {
+				for (size_t k = j + 1; k < n.size(); k++) {
 					if (n[i].getValue() + n[j].getValue() + n[k].getValue() == 15) {
 						value += 2;
 					}
@@ -101,8 +101,8 @@ int Game::calculateFifteens(std::vector<Card> n) {
 			}
 		}
 
-		for (int i = 0; i < n.size() - 1; i++) {
-			for (int j = i + 1; j < n.size(); j++) {
+		for (size_t i = 0; i < n.size() - 1; i++) {
+			for (size_t j = i + 1; j < n.size(); j++) {
 				if (n[i].getValue() + n[j].getValue() == 15) {
 					value += 2;
 				}
@@ -114,8 +114,8 @@ int Game::calculateFifteens(std::vector<Card> n) {
 
 int Game::calculatePairs(std::vector<Card> n) {
 	int value = 0;
-	for (int i = 0; i < n.size() - 1; i++) {
-		for (int j = i + 1; j < n.size(); j++) {
+	for (size_t i = 0; i < n.size() - 1; i++) {
+		for (size_t j = i + 1; j < n.size(); j++) {
 			if (n[i].getNumber() == n[j].getNumber()) {
 				value += 2;
 			}
@@ -130,7 +130,7 @@ int Game::calculateRuns(std::vector<Card> n) {
 	int biggest = 1;
 	int pair = 1;
 	bool triple = 0;
-	for (int i = 0; i < n.size() - 1; i++) {
+	for (size_t i = 0; i < n.size() - 1; i++) {
 		if (static_cast<int>(n[i].getNumber()) - static_cast<int>(n[i + 1].getNumber()) == 1) {
 			count++;
 			triple = 0;
@@ -195,7 +195,7 @@ int Game::calculateValue(std::vector<Card> n, bool crib)
 	value += calculateRuns(n);
 
 	if (static_cast<int>(cut.getNumber()) != static_cast<int>(Number::JACK)) {
-		for (int i = 0; i < n.size(); i++) {
+		for (size_t i = 0; i < n.size(); i++) {
 			if (static_cast<int>(n[i].getNumber()) == static_cast<int>(Number::JACK))
 			{
 				if (static_cast<int>(n[i].getSuit()) == static_cast<int>(cut.getSuit()))
@@ -290,7 +290,7 @@ void Game::getComputerDonations()
 std::string Game::printCrib()
 {
 	std::stringstream result;
-	for (int i = 0; i < crib.size(); i++)
+	for (size_t i = 0; i < crib.size(); i++)
 	{
 		result << i << ": " << crib[i].print() << "\n";
 	}
@@ -318,7 +318,7 @@ std::string Game::printComputerHand()
 int Game::checkPairs(Card c) {
 	int points = 0;
 	int pairs = 0;
-	for (int i = 1; i <= stream.size() && i < 4; i++) {
+	for (size_t i = 1; i <= stream.size() && i < 4; i++) {
 		if (static_cast<int>(c.getNumber()) == static_cast<int>(stream.at(stream.size() - i).getNumber())) {
 			pairs++;
 		}
@@ -347,7 +347,7 @@ int Game::checkRuns(Card c) {
 		std::vector<Card> temp = stream;
 		sortCards(temp);
 		int counter = 0;
-		for (int k = 0; k < temp.size() - 1; k++) {
+		for (size_t k = 0; k < temp.size() - 1; k++) {
 			if (static_cast<int>(temp[k].getNumber()) - static_cast<int>(temp[k + 1].getNumber()) == 1)
 			{
 				counter++;
@@ -360,12 +360,12 @@ int Game::checkRuns(Card c) {
 			counter = 0;
 			temp = stream;
 			std::vector<Card> temp2;
-			for (int i = 1; i < stream.size() - 2; i++) {
-				for (int j = i; j < stream.size(); j++) {
+			for (size_t i = 1; i < stream.size() - 2; i++) {
+				for (size_t j = i; j < stream.size(); j++) {
 					temp2.push_back(stream[j]);
 				}
 				sortCards(temp2);
-				for (int k = 0; k < temp2.size() - 1; k++) {
+				for (size_t k = 0; k < temp2.size() - 1; k++) {
 					if (static_cast<int>(temp2[k].getNumber()) - static_cast<int>(temp2[k + 1].getNumber()) == 1)
 					{
 						counter++;
@@ -411,7 +411,7 @@ int Game::testPlayCard(Card c) {
 void Game::computerSelect() {
 	int earned = 0;
 	std::vector<Card> temp;
-	for (int i = 0; i < computer.getHand().size(); i++) {
+	for (size_t i = 0; i < computer.getHand().size(); i++) {
 		if (computer.getHand().at(i).getValue() + field <= 31)
 		{
 			temp.push_back(computer.getHand().at(i));
@@ -420,7 +420,7 @@ void Game::computerSelect() {
 	int bestCard = 0;
 	if (!temp.size()) {
 		int count = 0;
-		for (int i = 0; i < user.getHand().size(); i++) {
+		for (size_t i = 0; i < user.getHand().size(); i++) {
 			if (field + user.getHand()[i].getValue() <= 31) {
 				count++;
 				break;
@@ -463,7 +463,7 @@ void Game::computerSelect() {
 	}
 	if (field == 0) {
 		int play2 = -1;
-		for (int y = 0; y < computer.getHand().size(); y++) {
+		for (size_t y = 0; y < computer.getHand().size(); y++) {
 			if (computer.getHand().at(y).getValue() != 5) {
 				play2 = y;
 				break;
@@ -490,7 +490,7 @@ void Game::computerSelect() {
 		}
 	}
 	else {
-		for (int j = 0; j < temp.size(); j++) {
+		for (size_t j = 0; j < temp.size(); j++) {
 			int attempt = testPlayCard(temp.at(j));
 			if (attempt > earned) {
 				bestCard = j;
@@ -501,7 +501,7 @@ void Game::computerSelect() {
 		lastPlayerComputer = 1;
 		std::cout << "Count: " << field << "\n";
 		int place = 0;
-		for (int z = 0; z < computer.getHand().size(); z++) {
+		for (size_t z = 0; z < computer.getHand().size(); z++) {
 			if (static_cast<int>(temp.at(bestCard).getNumber()) == static_cast<int>(computer.getHand().at(z).getNumber())
 				&& static_cast<int>(temp.at(bestCard).getSuit()) == static_cast<int>(computer.getHand().at(z).getSuit()))
 			{
@@ -548,7 +548,7 @@ void Game::userSelect() {
 	std::cout << printUserHand() << "\n\n";
 	std::cout << "Pick a card to play \n";
 	int count = 0;
-	for (int i = 0; i < user.getHand().size(); i++) {
+	for (size_t i = 0; i < user.getHand().size(); i++) {
 		if (field + user.getHand()[i].getValue() <= 31) {
 			count++;
 			break;
@@ -565,7 +565,7 @@ void Game::userSelect() {
 		}
 		std::cin.ignore(32767, '\n');
 		if (go == 9) {
-			for (int i = 0; i < computer.getHand().size(); i++) {
+			for (size_t i = 0; i < computer.getHand().size(); i++) {
 				if (field + computer.getHand()[i].getValue() <= 31) {
 					count++;
 					break;

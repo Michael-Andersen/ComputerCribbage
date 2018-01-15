@@ -9,11 +9,11 @@ void sortCards(std::vector<Card> &hand) {
 	int pos_min;
 	Card temp;
 
-	for (int i = 0; i < hand.size() - 1; i++)
+	for (size_t i = 0; i < hand.size() - 1; i++)
 	{
 		pos_min = i;
 
-		for (int j = i + 1; j < hand.size(); j++)
+		for (size_t j = i + 1; j < hand.size(); j++)
 		{
 
 			if (static_cast<int>(hand[j].getNumber()) > static_cast<int>(hand[pos_min].getNumber()))
@@ -33,7 +33,7 @@ void sortCards(std::vector<Card> &hand) {
 Deck::Deck() {
 	for (int i = 0; i < 4; i++)
 	{
-		for (int j = 1; j < 14; j++)
+		for (size_t j = 1; j < 14; j++)
 		{
 			deck.push_back(Card(static_cast<Suit>(i), static_cast<Number>(j)));
 		}
